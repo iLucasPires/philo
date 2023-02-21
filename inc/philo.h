@@ -1,6 +1,9 @@
 #ifndef PHILO_H
 # define PHILO_H
 
+//------------------------------/
+//			LIBRARIES			/
+//------------------------------/
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -8,8 +11,14 @@
 # include <sys/time.h>
 # include <unistd.h>
 
+//------------------------------/
+//			CONSTANTS			/
+//------------------------------/
 # define INT_MAX 2147483647
 # define INT_MIN -2147483648
+
+# define ERROR_NUMBER_PHILO "number of philosophers must be greater than 1"
+# define ERROR_ARGUMENTS "arguments must be greater than 0"
 
 //------------------------------/
 //			ENUMS				/
@@ -45,18 +54,22 @@ typedef struct s_number
 	int					number;
 }						t_number;
 
-typedef struct s_philo
-{
-	int					id;
-	pthread_t			*thread;
-}						t_philo;
-
 typedef struct s_data
 {
-	size_t				times[4];
+	unsigned			times[4];
 	unsigned			number_philo;
 }						t_data;
 
+typedef struct s_philo
+{
+	unsigned			id;
+	t_data				*data;
+}						t_philo;
+
+//------------------------------/
+//			FUNCTIONS			/
+//------------------------------/
 size_t					get_time_current(void);
-t_number				is_number_within_range(char *str);
+void					exit_error(char *message);
+void					check_args(int argc, char **argv, t_data *data);
 #endif

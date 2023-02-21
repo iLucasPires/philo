@@ -1,5 +1,6 @@
 #include <philo.h>
 
+
 void	*dinner_philo(void *arg)
 {
 	t_philo	*philo;

@@ -1,33 +1,31 @@
 #include "philo.h"
 
-void	check_args(int argc, char const *argv[])
+t_philo	*init_philo(t_data *data)
 {
-	t_number	number;
-	int			index;
+	unsigned	index;
+	t_philo		*philo;
 
 	index = 0;
-	if (argc != 5 && argc != 6)
+	printf("number_philo: %d\n", data->number_philo);
+	philo = malloc(sizeof(t_philo) * data->number_philo);
+	if (philo == NULL)
+		exit_error("malloc failed");
+	while (index < data->number_philo)
 	{
-		printf("Error: wrong number of arguments (5 or 6 required)\n");
-		exit(EXIT_FAILURE);
+		philo[index].id = index + 1;
+		philo[index].data = data;
+		index++;
 	}
-	while (++index < argc)
-	{
-		number = is_number_within_range((char *)argv[index]);
-		if (number.is_number == FALSE)
-		{
-			printf("Error: argument %d is not a number\n", index);
-			exit(EXIT_FAILURE);
-		}
-		printf("number: %d \n", number.number);
-	}
+	return (philo);
 }
 
-int	main(int argc, char const *argv[])
+int	main(int argc, char **argv)
 {
 	t_data	data;
+	t_philo	*philo;
 
-	(void)data;
-	check_args(argc, argv);
+	check_args(argc, argv, &data);
+	philo = init_philo(&data);
+
 	return (0);
 }
