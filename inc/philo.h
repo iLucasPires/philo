@@ -16,9 +16,15 @@
 //------------------------------/
 # define INT_MAX 2147483647
 # define INT_MIN -2147483648
-
-# define ERROR_NUMBER_PHILO "number of philosophers must be greater than 1"
-# define ERROR_ARGUMENTS "arguments must be greater than 0"
+# define PLUS '+'
+# define MINUS '-'
+# define NULL_CHAR '\0'
+# define ERROR_ARGS "wrong number of arguments"
+# define ERROR_NUMBER "arguments must be numbers"
+# define ERROR_NEGATIVE "arguments must be positive"
+# define ERROR_THREAD "pthread_create failed"
+# define ERROR_JOIN "pthread_join failed"
+# define ERROR_MALLOC "malloc failed"
 
 //------------------------------/
 //			ENUMS				/
@@ -31,16 +37,15 @@ typedef enum e_bool
 
 enum
 {
-	NEGATIVE = -1,
-	POSITIVE = 1
+	TIME_TO_DIE,
+	TIME_TO_EAT,
+	TIME_TO_SLEEP
 };
 
 enum
 {
-	TIME_TO_DIE,
-	TIME_TO_EAT,
-	TIME_TO_SLEEP,
-	MUST_EAT
+	LEFT,
+	RIGHT
 };
 
 //------------------------------/
@@ -48,28 +53,36 @@ enum
 //------------------------------/
 typedef struct timeval	t_timeval;
 
-typedef struct s_number
-{
-	t_bool				is_number;
-	int					number;
-}						t_number;
-
 typedef struct s_data
 {
-	unsigned			times[4];
+	unsigned			times[3];
+	unsigned			number_eat;
+	size_t				number_start;
 	unsigned			number_philo;
+	pthread_mutex_t		control_print;
+	size_t				last_time;
+	pthread_mutex_t		*forks;
+	pthread_mutex_t		control;
 }						t_data;
 
 typedef struct s_philo
 {
 	unsigned			id;
+	unsigned			number_eat;
+	pthread_t			thread;
 	t_data				*data;
+	pthread_mutex_t		*forks[2];
 }						t_philo;
 
 //------------------------------/
 //			FUNCTIONS			/
 //------------------------------/
 size_t					get_time_current(void);
+size_t					get_time_difference(size_t time_start);
+void					*dinner_philo(void *arg);
 void					exit_error(char *message);
-void					check_args(int argc, char **argv, t_data *data);
+unsigned				strtoint(char *str);
+void					launch_threads(t_philo *philo);
+void					init_data(int argc, char **argv, t_data *data);
+void					destroy_data(t_data *data);
 #endif

@@ -1,5 +1,5 @@
 NAME = philo
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror -pthread -g
 
 DIR_SOURCE = ./src
 DIR_HEADERS = ./inc
@@ -15,7 +15,7 @@ $(NAME): $(OBJ)
 	@echo "Linking..."
 	@cc $(CFLAGS) -I $(DIR_HEADERS)  -o $@ $^
 
-$(DIR_OBJ)/%.o: $(DIR_SOURCE)/%.c
+$(DIR_OBJ)/%.o: $(DIR_SOURCE)/%.c $(DIR_HEADERS)/philo.h
 	$(shell mkdir -p $(dir $@))
 	@cc $(CFLAGS) -I $(DIR_HEADERS) -o $@ -c $<
 	@echo "Compiled "$<" successfully!"
