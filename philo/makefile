@@ -1,5 +1,5 @@
 NAME = philo
-CFLAGS = -Wall -Wextra -Werror -pthread -g
+CFLAGS = -Wall -Wextra -Werror -pthread -g -o3
 
 DIR_SOURCE = ./src
 DIR_HEADERS = ./inc

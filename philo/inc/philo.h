@@ -55,34 +55,44 @@ typedef struct timeval	t_timeval;
 
 typedef struct s_data
 {
-	unsigned			times[3];
-	unsigned			number_eat;
+	size_t				times[3];
+	int					number_eat;
+	int					number_philo;
 	size_t				number_start;
-	unsigned			number_philo;
+	t_bool				someone_dead;
 	pthread_mutex_t		control_print;
-	size_t				last_time;
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		control;
-}						t_data;
+}						t_share;
 
 typedef struct s_philo
 {
-	unsigned			id;
-	unsigned			number_eat;
+	int					id;
+	int					number_eat;
+	t_bool				alive;
+	size_t				last_meal_time;
 	pthread_t			thread;
-	t_data				*data;
+	t_share				*data;
 	pthread_mutex_t		*forks[2];
 }						t_philo;
+
+typedef struct s_args
+{
+	t_share				*data;
+	t_philo				*philo;
+}						t_args;
 
 //------------------------------/
 //			FUNCTIONS			/
 //------------------------------/
-size_t					get_time_current(void);
-size_t					get_time_difference(size_t time_start);
+size_t					get_current(void);
+size_t					get_diff(size_t time_start);
 void					*dinner_philo(void *arg);
+void					print_message(t_share *data, int id, char *message, int amounts);
+void					*monitor_philo(void *arg);
 void					exit_error(char *message);
-unsigned				strtoint(char *str);
+int						strtoint(char *str);
 void					launch_threads(t_philo *philo);
-void					init_data(int argc, char **argv, t_data *data);
-void					destroy_data(t_data *data);
+void					init_share(int argc, char **argv, t_share *data);
+void					destroy_data(t_share *data);
 #endif

@@ -8,7 +8,8 @@
 		"time.h": "c",
 		"philo.h": "c",
 		"stdlib.h": "c",
-		"string.h": "c"
+		"string.h": "c",
+		"types.h": "c"
 	},
 	"files.exclude": {
 		"**/.git": true,

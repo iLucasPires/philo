@@ -1,8 +1,8 @@
 #include "philo.h"
 
-void	init_forks(t_data *data)
+void	init_forks(t_share *data)
 {
-	unsigned	index;
+	int	index;
 
 	index = 0;
 	data->forks = calloc(data->number_philo, sizeof(pthread_mutex_t));
@@ -14,15 +14,15 @@ void	init_forks(t_data *data)
 	}
 }
 
-t_philo	*init_philo(t_data *data)
+t_philo	*init_philo(t_share *data)
 {
-	t_philo		*philo;
-	unsigned	index;
+	t_philo			*philo;
+	int	index;
 
 	index = 0;
 	philo = calloc(data->number_philo, sizeof(t_philo));
 	if (philo == NULL)
-		exit_error("malloc failed");
+		exit_error(ERROR_MALLOC);
 	init_forks(data);
 	while (index < data->number_philo)
 	{
@@ -34,15 +34,16 @@ t_philo	*init_philo(t_data *data)
 			% data->number_philo];
 		index++;
 	}
+	data->number_eat = data->number_philo;
 	return (philo);
 }
 
 int	main(int argc, char **argv)
 {
-	t_data	data;
+	t_share	data;
 	t_philo	*philo;
 
-	init_data(argc, argv, &data);
+	init_share(argc, argv, &data);
 	philo = init_philo(&data);
 	launch_threads(philo);
 	destroy_data(&data);

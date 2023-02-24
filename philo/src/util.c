@@ -1,4 +1,4 @@
-#include <philo.h>
+#include "philo.h"
 
 void	exit_error(char *message)
 {
@@ -6,9 +6,9 @@ void	exit_error(char *message)
 	exit(EXIT_FAILURE);
 }
 
-unsigned	strtoint(char *str)
+int	strtoint(char *str)
 {
-	unsigned	number;
+	int	number;
 
 	number = 0;
 	while (*str == PLUS || *str == MINUS)

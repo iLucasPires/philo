@@ -1,6 +1,6 @@
 #include "philo.h"
 
-size_t	get_time_current(void)
+size_t	get_current(void)
 {
 	t_timeval	time;
 	size_t		time_current;
@@ -10,10 +10,10 @@ size_t	get_time_current(void)
 	return (time_current);
 }
 
-size_t	get_time_difference(size_t time_start)
+size_t	get_diff(size_t time_start)
 {
 	size_t	time_current;
 
-	time_current = get_time_current();
+	time_current = get_current();
 	return (time_current - time_start);
 }
