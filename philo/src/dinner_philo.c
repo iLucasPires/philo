@@ -32,7 +32,7 @@ void	*dinner_philo(void *arg)
 	set_last_meal_time(philo);
 	if (philo->data->number_philo == 1)
 	{
-		print_message(philo->data, philo->id, "has taken a fork", 1);
+		print_message(philo->data, philo->id, FORK, 1);
 		return (NULL);
 	}
 	while (philo->number_eat && !get_someone_dead(philo->data))
