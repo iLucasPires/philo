@@ -82,16 +82,21 @@ typedef struct s_philo
 size_t					get_current(void);
 size_t					get_diff(size_t time_start);
 void					*dinner_philo(void *arg);
-void					print_message(t_share *data, int id, char *message,
-							int amounts);
+void					print_message(t_share *data, int id, char *message, int amounts);
 void					*monitor_philo(void *arg);
 void					exit_error(char *message);
 int						strtoint(char *str);
-void					launch_threads(t_philo *philo);
 void					init_share(int argc, char **argv, t_share *data);
 void					destroy_data(t_share *data);
 int						create_trhead(t_philo *philo, pthread_t *monitor);
 void					join_thread(t_philo *philo, pthread_t *monitor);
 
+void					set_last_meal_time(t_philo *philo);
+void					set_number_eat(t_philo *philo);
+void					set_someone_dead(t_share *data);
+
 t_bool					get_someone_dead(t_share *data);
+size_t					get_last_meal_time(t_philo *philo);
+int						get_number_eat(t_philo *philo);
+
 #endif

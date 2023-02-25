@@ -5,13 +5,16 @@ static size_t	aux_monitor(t_philo *philo)
 	size_t	diff;
 	int		number_eat;
 
-	pthread_mutex_lock(&philo->data->control);
-	diff = get_current() - philo->last_meal_time;
-	pthread_mutex_unlock(&philo->data->control);
-	pthread_mutex_lock(&philo->data->control);
-	number_eat = philo->number_eat;
-	pthread_mutex_unlock(&philo->data->control);
+	diff = get_current() - get_last_meal_time(philo);
+	number_eat = get_number_eat(philo);
 	return (diff > philo->data->times[TIME_TO_DIE] && number_eat);
+}
+
+void	print_died(t_share *data, int id)
+{
+	pthread_mutex_lock(&data->control_print);
+	printf("%zu %d died\n", get_diff(data->number_start), id);
+	pthread_mutex_unlock(&data->control_print);
 }
 
 void	*monitor_philo(void *arg)
@@ -25,10 +28,8 @@ void	*monitor_philo(void *arg)
 	{
 		if (aux_monitor(&philo[index]))
 		{
-			print_message(philo->data, philo[index].id, "died", 1);
-			pthread_mutex_lock(&philo->data->control);
-			philo->data->someone_dead = TRUE;
-			pthread_mutex_unlock(&philo->data->control);
+			set_someone_dead(philo->data);
+			print_died(philo->data, philo[index].id);
 			return (NULL);
 		}
 		index++;
