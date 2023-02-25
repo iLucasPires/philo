@@ -26,7 +26,9 @@ void	*monitor_philo(void *arg)
 		if (aux_monitor(&philo[index]))
 		{
 			print_message(philo->data, philo[index].id, "died", 1);
+			pthread_mutex_lock(&philo->data->control);
 			philo->data->someone_dead = TRUE;
+			pthread_mutex_unlock(&philo->data->control);
 			return (NULL);
 		}
 		index++;

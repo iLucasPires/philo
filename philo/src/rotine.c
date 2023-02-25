@@ -2,7 +2,7 @@
 
 void	print_message(t_share *data, int id, char *message, int amounts)
 {
-	if (data->someone_dead)
+	if (get_someone_dead(data))
 		return ;
 	pthread_mutex_lock(&data->control_print);
 	while (amounts--)
@@ -37,6 +37,7 @@ void	*dinner_one_philo(t_philo *philo)
 	return (NULL);
 }
 
+
 void	*dinner_philo(void *arg)
 {
 	t_philo	*philo;
@@ -47,7 +48,7 @@ void	*dinner_philo(void *arg)
 	pthread_mutex_unlock(&philo->data->control);
 	if (philo->data->number_philo == 1)
 		return (dinner_one_philo(philo));
-	while (philo->number_eat && !philo->data->someone_dead)
+	while (philo->number_eat && !get_someone_dead(philo->data))
 	{
 		philo_get_forks(philo);
 		philo_eating(philo);

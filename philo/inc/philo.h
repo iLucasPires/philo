@@ -76,12 +76,6 @@ typedef struct s_philo
 	pthread_mutex_t		*forks[2];
 }						t_philo;
 
-typedef struct s_args
-{
-	t_share				*data;
-	t_philo				*philo;
-}						t_args;
-
 //------------------------------/
 //			FUNCTIONS			/
 //------------------------------/
@@ -96,6 +90,8 @@ int						strtoint(char *str);
 void					launch_threads(t_philo *philo);
 void					init_share(int argc, char **argv, t_share *data);
 void					destroy_data(t_share *data);
-int					create_trhead(t_philo *philo, pthread_t *monitor);
+int						create_trhead(t_philo *philo, pthread_t *monitor);
 void					join_thread(t_philo *philo, pthread_t *monitor);
+
+t_bool					get_someone_dead(t_share *data);
 #endif
