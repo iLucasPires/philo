@@ -1,38 +1,40 @@
 #include "philo.h"
 
-void	init_forks(t_share *data)
+int	init_forks(t_share *data)
 {
-	int	index;
+	int	i;
 
-	index = 0;
+	i = 0;
 	data->forks = calloc(data->number_philo, sizeof(pthread_mutex_t));
-	while (index < data->number_philo)
+	while (i < data->number_philo)
 	{
-		if (pthread_mutex_init(&data->forks[index], NULL))
-			exit_error(ERROR_THREAD);
-		index++;
+		if (pthread_mutex_init(&data->forks[i], NULL))
+			return (EXIT_FAILURE);
+		i++;
 	}
+	return (EXIT_SUCCESS);
 }
 
 t_philo	*init_philo(t_share *data)
 {
 	t_philo	*philo;
-	int		index;
+	int		i;
 
-	index = 0;
+	i = 0;
 	philo = calloc(data->number_philo, sizeof(t_philo));
 	if (philo == NULL)
-		exit_error(ERROR_MALLOC);
-	init_forks(data);
-	while (index < data->number_philo)
+		return (NULL);
+	if (init_forks(data))
+		return (NULL);
+	while (i < data->number_philo)
 	{
-		philo[index].id = index + 1;
-		philo[index].data = data;
-		philo[index].number_eat = data->number_eat;
-		philo[index].forks[RIGHT] = &data->forks[philo[index].id - 1];
-		philo[index].forks[LEFT] = &data->forks[philo[index].id
+		philo[i].id = i + 1;
+		philo[i].data = data;
+		philo[i].number_eat = data->number_eat;
+		philo[i].forks[RIGHT] = &data->forks[philo[i].id - 1];
+		philo[i].forks[LEFT] = &data->forks[philo[i].id
 			% data->number_philo];
-		index++;
+		i++;
 	}
 	data->number_eat = data->number_philo;
 	return (philo);
@@ -44,11 +46,18 @@ int	main(int argc, char **argv)
 	t_philo		*philo;
 	pthread_t	monitor;
 
-	init_share(argc, argv, &data);
+	if (init_share(argc, argv, &data))
+	{
+		printf(ERROR_ARGS);
+		return (EXIT_FAILURE);
+	}
 	philo = init_philo(&data);
-	create_trhead(philo, &monitor);
-	join_thread(philo, &monitor);
+	if (philo != NULL)
+	{
+		create_trhead(philo, &monitor);
+		join_thread(philo, &monitor);
+	}
 	destroy_data(&data);
 	free(philo);
-	return (0);
+	return (EXIT_SUCCESS);
 }

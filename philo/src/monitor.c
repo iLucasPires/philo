@@ -19,22 +19,22 @@ void	print_died(t_share *data, int id)
 
 void	*monitor_philo(void *arg)
 {
-	int		index;
+	int		i;
 	t_philo	*philo;
 
-	index = 0;
+	i = 0;
 	philo = (t_philo *)arg;
-	while (philo->data->number_eat)
+	while (get_data_number_eat(philo->data))
 	{
-		if (aux_monitor(&philo[index]))
+		if (aux_monitor(&philo[i]))
 		{
 			set_someone_dead(philo->data);
-			print_died(philo->data, philo[index].id);
+			print_died(philo->data, philo[i].id);
 			return (NULL);
 		}
-		index++;
-		if (index == philo->data->number_philo)
-			index = 0;
+		i++;
+		if (i == philo->data->number_philo)
+			i = 0;
 		usleep(1000);
 	}
 	return (NULL);

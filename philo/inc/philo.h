@@ -19,12 +19,18 @@
 # define PLUS '+'
 # define MINUS '-'
 # define NULL_CHAR '\0'
-# define ERROR_ARGS "wrong number of arguments"
+# define ERROR_ARGS "wrong number of arguments or invalid arguments\n"
 # define ERROR_NUMBER "arguments must be numbers"
 # define ERROR_NEGATIVE "arguments must be positive"
 # define ERROR_THREAD "pthread_create failed"
 # define ERROR_JOIN "pthread_join failed"
 # define ERROR_MALLOC "malloc failed"
+
+# define FORK "has taken a fork"
+# define EAT "is eating"
+# define SLEEP "is sleeping"
+# define THINK "is thinking"
+# define DIED "died"
 
 //------------------------------/
 //			ENUMS				/
@@ -82,19 +88,22 @@ typedef struct s_philo
 size_t					get_current(void);
 size_t					get_diff(size_t time_start);
 void					*dinner_philo(void *arg);
-void					print_message(t_share *data, int id, char *message, int amounts);
+void					print_message(t_share *data, int id, char *message,
+							int amounts);
 void					*monitor_philo(void *arg);
 void					exit_error(char *message);
 int						strtoint(char *str);
-void					init_share(int argc, char **argv, t_share *data);
+int						init_share(int argc, char **argv, t_share *data);
 void					destroy_data(t_share *data);
 int						create_trhead(t_philo *philo, pthread_t *monitor);
-void					join_thread(t_philo *philo, pthread_t *monitor);
+int						join_thread(t_philo *philo, pthread_t *monitor);
 
 void					set_last_meal_time(t_philo *philo);
 void					set_number_eat(t_philo *philo);
 void					set_someone_dead(t_share *data);
+void					set_data_number_eat(t_share *data);
 
+int						get_data_number_eat(t_share *data);
 t_bool					get_someone_dead(t_share *data);
 size_t					get_last_meal_time(t_philo *philo);
 int						get_number_eat(t_philo *philo);
