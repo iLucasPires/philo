@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lpires-n <lpires-n@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/25 21:30:44 by lpires-n          #+#    #+#             */
+/*   Updated: 2023/02/25 21:35:03 by lpires-n         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -14,8 +26,8 @@
 //			CONSTANTS			/
 //------------------------------/
 # define ERROR_ARGS "wrong number of arguments or invalid arguments\n"
-# define ERROR_THREAD "pthread_create failed"
-# define ERROR_JOIN "pthread_join failed"
+# define ERROR_THREAD "pthread_create failed\n"
+# define ERROR_JOIN "pthread_join failed\n"
 # define ERROR_MALLOC "malloc failed"
 
 # define FORK "has taken a fork"
@@ -67,7 +79,6 @@ typedef struct s_philo
 {
 	int					id;
 	int					number_eat;
-	t_bool				alive;
 	size_t				last_meal_time;
 	pthread_t			thread;
 	t_share				*data;
@@ -81,8 +92,7 @@ size_t					get_current(void);
 size_t					get_diff(size_t time_start);
 void					my_usleep(size_t time);
 void					*dinner_philo(void *arg);
-void					print_message(t_share *data, int id, char *message,
-							int amounts);
+void					print_message(t_share *data, int id, char *message, int amounts);
 void					*monitor_philo(void *arg);
 int						strtoint(char *str);
 int						init_share(int argc, char **argv, t_share *data);
