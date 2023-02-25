@@ -88,11 +88,14 @@ typedef struct s_args
 size_t					get_current(void);
 size_t					get_diff(size_t time_start);
 void					*dinner_philo(void *arg);
-void					print_message(t_share *data, int id, char *message, int amounts);
+void					print_message(t_share *data, int id, char *message,
+							int amounts);
 void					*monitor_philo(void *arg);
 void					exit_error(char *message);
 int						strtoint(char *str);
 void					launch_threads(t_philo *philo);
 void					init_share(int argc, char **argv, t_share *data);
 void					destroy_data(t_share *data);
+int					create_trhead(t_philo *philo, pthread_t *monitor);
+void					join_thread(t_philo *philo, pthread_t *monitor);
 #endif

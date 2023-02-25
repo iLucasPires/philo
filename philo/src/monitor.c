@@ -7,6 +7,8 @@ static size_t	aux_monitor(t_philo *philo)
 
 	pthread_mutex_lock(&philo->data->control);
 	diff = get_current() - philo->last_meal_time;
+	pthread_mutex_unlock(&philo->data->control);
+	pthread_mutex_lock(&philo->data->control);
 	number_eat = philo->number_eat;
 	pthread_mutex_unlock(&philo->data->control);
 	return (diff > philo->data->times[TIME_TO_DIE] && number_eat);

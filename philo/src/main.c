@@ -16,8 +16,8 @@ void	init_forks(t_share *data)
 
 t_philo	*init_philo(t_share *data)
 {
-	t_philo			*philo;
-	int	index;
+	t_philo	*philo;
+	int		index;
 
 	index = 0;
 	philo = calloc(data->number_philo, sizeof(t_philo));
@@ -40,12 +40,14 @@ t_philo	*init_philo(t_share *data)
 
 int	main(int argc, char **argv)
 {
-	t_share	data;
-	t_philo	*philo;
+	t_share		data;
+	t_philo		*philo;
+	pthread_t	monitor;
 
 	init_share(argc, argv, &data);
 	philo = init_philo(&data);
-	launch_threads(philo);
+	create_trhead(philo, &monitor);
+	join_thread(philo, &monitor);
 	destroy_data(&data);
 	free(philo);
 	return (0);

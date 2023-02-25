@@ -22,6 +22,8 @@ static void	philo_eating(t_philo *philo)
 	print_message(philo->data, philo->id, "is eating", 1);
 	pthread_mutex_lock(&philo->data->control);
 	philo->last_meal_time = get_current();
+	pthread_mutex_unlock(&philo->data->control);
+	pthread_mutex_lock(&philo->data->control);
 	philo->number_eat--;
 	pthread_mutex_unlock(&philo->data->control);
 	usleep(philo->data->times[TIME_TO_EAT]);
@@ -29,12 +31,22 @@ static void	philo_eating(t_philo *philo)
 	pthread_mutex_unlock(philo->forks[RIGHT]);
 }
 
+void	*dinner_one_philo(t_philo *philo)
+{
+	print_message(philo->data, philo->id, "has taken a fork", 1);
+	return (NULL);
+}
+
 void	*dinner_philo(void *arg)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	pthread_mutex_lock(&philo->data->control);
 	philo->last_meal_time = get_current();
+	pthread_mutex_unlock(&philo->data->control);
+	if (philo->data->number_philo == 1)
+		return (dinner_one_philo(philo));
 	while (philo->number_eat && !philo->data->someone_dead)
 	{
 		philo_get_forks(philo);
@@ -42,12 +54,12 @@ void	*dinner_philo(void *arg)
 		if (philo->number_eat == 0)
 		{
 			philo->data->number_eat--;
-			break ;
+			return (NULL);
 		}
 		print_message(philo->data, philo->id, "is sleeping", 1);
 		usleep(philo->data->times[TIME_TO_SLEEP]);
 		print_message(philo->data, philo->id, "is thinking", 1);
-		usleep(100);
+		usleep(1000);
 	}
 	return (NULL);
 }
