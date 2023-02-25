@@ -2,8 +2,8 @@
 
 int	*verify_args(int argc, char **argv)
 {
-	int	*args;
 	int	i;
+	int	*args;
 
 	i = 1;
 	if (argc < 5 || argc > 6)
@@ -14,7 +14,7 @@ int	*verify_args(int argc, char **argv)
 	while (i < argc)
 	{
 		args[i - 1] = strtoint(argv[i]);
-		if (args[i - 1] == -1)
+		if (args[i - 1] < 1)
 		{
 			free(args);
 			return (NULL);
@@ -32,11 +32,6 @@ int	init_share(int argc, char **argv, t_share *data)
 	if (args == NULL)
 		return (EXIT_FAILURE);
 	data->number_philo = args[0];
-	if (data->number_philo == 0)
-	{
-		free(args);
-		return (EXIT_FAILURE);
-	}
 	data->times[TIME_TO_DIE] = args[1];
 	data->times[TIME_TO_EAT] = args[2] * 1000;
 	data->times[TIME_TO_SLEEP] = args[3] * 1000;

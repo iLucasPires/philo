@@ -7,21 +7,13 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
 
 //------------------------------/
 //			CONSTANTS			/
 //------------------------------/
-# define INT_MAX 2147483647
-# define INT_MIN -2147483648
-# define PLUS '+'
-# define MINUS '-'
-# define NULL_CHAR '\0'
 # define ERROR_ARGS "wrong number of arguments or invalid arguments\n"
-# define ERROR_NUMBER "arguments must be numbers"
-# define ERROR_NEGATIVE "arguments must be positive"
 # define ERROR_THREAD "pthread_create failed"
 # define ERROR_JOIN "pthread_join failed"
 # define ERROR_MALLOC "malloc failed"
