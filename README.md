@@ -21,7 +21,7 @@ The project consists of simulating the behavior of philosophers at a dinner tabl
     <img src="img/img1.png">
 </p>
 
-## Installation
+## How to use
 - Clone the repository `git clone https://github.com/iLucasPires/philo.git`
 - Enter the project folder `cd philo`
 - Run `make` to compile the project
