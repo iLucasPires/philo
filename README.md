@@ -46,6 +46,3 @@ The project consists of simulating the behavior of philosophers at a dinner tabl
 
 ![Example](img/img2.gif)
 
-## TODO
-- [ ] Add more tests
-- [ ] better performance
