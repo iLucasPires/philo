@@ -17,9 +17,6 @@ This project is about using threads and mutexes to solve the [Dining Philosopher
 
 The project consists of simulating the behavior of philosophers at a dinner table. Each philosopher has a fork on his left and right. To eat, a philosopher needs both forks. To avoid deadlock, a philosopher must always pick up the fork on his right first, then the fork on his left. When he finishes eating, he puts down both forks so that the other philosophers can eat. The simulation stops when a philosopher dies.
 
-<p align="center">
-    <img src="img/img1.png">
-</p>
 
 ## How to use
 - Clone the repository `git clone https://github.com/iLucasPires/philo.git`
